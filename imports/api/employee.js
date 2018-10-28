@@ -1,5 +1,9 @@
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
+import {
+  Meteor
+} from 'meteor/meteor';
+import {
+  Mongo
+} from 'meteor/mongo';
 
 export const Employees = new Mongo.Collection('Employees');
 
@@ -11,5 +15,14 @@ Meteor.methods({
       email,
       age
     });
+  },
+  'employee.update'(id, name, email, age) {
+    Employees.update(id, {
+      $set: {
+        name,
+        email,
+        age
+      }
+    })
   }
 });

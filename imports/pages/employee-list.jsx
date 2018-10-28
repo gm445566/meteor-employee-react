@@ -1,6 +1,7 @@
 import React from 'react';
 import { Employees } from '../api/employee';
 import { Tracker } from 'meteor/tracker';
+import { Link } from 'react-router-dom';
 
 export default class EmployeeList extends React.Component {
   constructor(props) {
@@ -10,7 +11,6 @@ export default class EmployeeList extends React.Component {
     };
   }
   componentDidMount() {
-    console.log('componentDidMount EmployeesList');
     this.employeesTracker = Tracker.autorun(() => {
       Meteor.subscribe('employees');
       const employees = Employees.find().fetch();
@@ -19,8 +19,6 @@ export default class EmployeeList extends React.Component {
   }
 
   componentWillUnmount() {
-    // event out of component
-    console.log('componentWillUnmount EmployeesList');
     this.employeesTracker.stop();
   }
 
@@ -28,7 +26,8 @@ export default class EmployeeList extends React.Component {
     return this.state.employees.map(employee => {
       return (
         <li key={employee._id}>
-          {employee.name} -:Age {employee.age}
+          <Link to={`/employee-detail/${employee._id}`}>{employee.name}</Link>{' '}
+          :Age {employee.age}
         </li>
       );
     });
